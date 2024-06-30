@@ -1,7 +1,13 @@
 import { useState } from 'react';
 
+const initialState = {
+  task: '',
+  date: '',
+  status: 'pending',
+};
+
 const AddTask = ({ addTask }) => {
-  const [task, setTask] = useState({ task: '', date: '' });
+  const [task, setTask] = useState(initialState);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTask((prevState) => ({
@@ -13,7 +19,7 @@ const AddTask = ({ addTask }) => {
     e.preventDefault();
     addTask(task);
 
-    setTask({ task: '', date: '' });
+    setTask(initialState);
   };
 
   return (

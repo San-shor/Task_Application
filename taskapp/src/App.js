@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-// import './App.css';
+
 import AddTask from './components/AddTask';
 import ShowTask from './components/ShowTask';
-import UpdateTaskForm from './components/UpdateTaskForm';
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -22,10 +21,11 @@ function App() {
     setTasks((prevTasks) => prevTasks.filter((_, i) => i !== index));
   };
 
-  // useEffect(() => {
-  //   const storedTasks = JSON.parse(localStorage.getItem('TaskList'));
-  //   if (storedTasks) setTasks(storedTasks);
-  // }, []);
+  const updateTask = (updatedTask, index) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task, i) => (i === index ? updatedTask : task))
+    );
+  };
 
   useEffect(() => {
     localStorage.setItem('TaskList', JSON.stringify(tasks));
@@ -38,9 +38,13 @@ function App() {
       </header>
       <div className=' flex flex-col max-w-3xl mx-auto gap-10'>
         <AddTask addTask={addTask} />
-        <ShowTask tasks={tasks} clearTask={clearTask} deleteTask={deleteTask} />
+        <ShowTask
+          tasks={tasks}
+          clearTask={clearTask}
+          deleteTask={deleteTask}
+          updateTask={updateTask}
+        />
       </div>
-      <UpdateTaskForm />
     </div>
   );
 }

@@ -1,9 +1,20 @@
-const ShowTask = ({ tasks, clearTask, deleteTask }) => {
+import { useState } from 'react';
+import UpdateTaskForm from './UpdateTaskForm';
+
+const ShowTask = ({ tasks, clearTask, deleteTask, updateTask }) => {
+  const [singleTask, setSingleTask] = useState([]);
+  const [index, setIndex] = useState();
+
+  const handleEdit = (index) => {
+    setSingleTask(tasks[index]);
+    setIndex(index);
+  };
+
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex items-center  justify-between  '>
         <h3 className='text-xl font-semibold text-gray-800 '>Task List</h3>
-        {console.log(tasks)}
+
         <button
           className='btn btn-active btn-accent btn-sm text-white'
           onClick={clearTask}>
@@ -24,18 +35,19 @@ const ShowTask = ({ tasks, clearTask, deleteTask }) => {
           <tbody>
             {tasks.length > 0 ? (
               tasks.map((task, index) => (
-                <tr className='text-base '>
+                <tr className='text-base ' key={index}>
                   <th>{index + 1}</th>
                   <td>{task.task}</td>
                   <td>{task.date}</td>
-                  <td>Pending</td>
+                  <td>{task.status}</td>
                   <td className=' flex gap-3'>
                     <div className='tooltip' data-tip='Edit'>
                       <button
                         className='btn btn-outline btn-info btn-sm '
-                        onClick={() =>
-                          document.getElementById('my_modal_5').showModal()
-                        }>
+                        onClick={() => {
+                          handleEdit(index);
+                          document.getElementById('my_modal_5').showModal();
+                        }}>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           fill='none'
@@ -81,6 +93,7 @@ const ShowTask = ({ tasks, clearTask, deleteTask }) => {
           </tbody>
         </table>
       </div>
+      <UpdateTaskForm task={singleTask} updateTask={updateTask} index={index} />
     </div>
   );
 };

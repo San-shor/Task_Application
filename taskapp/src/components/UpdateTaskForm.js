@@ -1,7 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const UpdateTaskForm = () => {
-  const handleUpdate = () => {};
+const UpdateTaskForm = ({ task, index, updateTask }) => {
+  const [formValue, setFormValue] = useState(task);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValue((prevValue) => ({
+      ...prevValue,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (status) => {
+    setFormValue((prevValue) => ({
+      ...prevValue,
+      status,
+    }));
+  };
+
+  const handleUpdate = () => {
+    updateTask(formValue, index);
+    document.getElementById('my_modal_5').close();
+  };
+
+  useEffect(() => {
+    setFormValue(task);
+  }, [task]);
+
   return (
     <div>
       <dialog id='my_modal_5' className='modal modal-bottom sm:modal-middle'>
@@ -17,8 +42,10 @@ const UpdateTaskForm = () => {
               <input
                 type='text'
                 name='task'
+                value={formValue.task}
                 placeholder='Type here'
                 className='input input-bordered w-full max-w-xs'
+                onChange={handleChange}
               />
             </label>
             <label className='form-control w-full max-w-xs'>
@@ -28,8 +55,10 @@ const UpdateTaskForm = () => {
               <input
                 type='date'
                 name='date'
+                value={formValue.date}
                 placeholder='Type here'
                 className='input input-bordered w-full max-w-xs'
+                onChange={handleChange}
               />
             </label>
           </div>
@@ -37,11 +66,25 @@ const UpdateTaskForm = () => {
           <div className='flex flex-row gap-4 mt-4'>
             <label className='cursor-pointer label gap-1'>
               <span className='label-text'>Pending</span>
-              <input type='checkbox' className='checkbox checkbox-error ' />
+              <input
+                type='checkbox'
+                value={formValue.status}
+                checked={
+                  formValue.status === 'pending' ? formValue.status : null
+                }
+                onChange={() => handleCheckboxChange('pending')}
+                className='checkbox checkbox-error '
+              />
             </label>
             <label className='cursor-pointer label gap-1'>
               <span className='label-text'>Complete</span>
-              <input type='checkbox' className='checkbox  checkbox-success ' />
+              <input
+                type='checkbox'
+                value={formValue.status}
+                className='checkbox  checkbox-success '
+                checked={formValue.status === 'complete'}
+                onChange={() => handleCheckboxChange('complete')}
+              />
             </label>
           </div>
           <div className='mt-4 cursor-pointer'>
