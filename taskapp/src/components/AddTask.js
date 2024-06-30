@@ -22,7 +22,7 @@ const AddTask = ({ addTask }) => {
         <div className='flex  justify-center items-center space-x-4'>
           <label className='form-control w-full max-w-xs'>
             <div className='label'>
-              <span className='label-text font-medium text-gray-700'>
+              <span className='label-text font-bold text-gray-700'>
                 Add your daily task
               </span>
             </div>
@@ -37,7 +37,7 @@ const AddTask = ({ addTask }) => {
           </label>
           <label className='form-control w-full max-w-xs'>
             <div className='label'>
-              <span className='label-text font-medium text-gray-700'>Date</span>
+              <span className='label-text font-bold text-gray-700'>Date</span>
             </div>
             <input
               type='date'
@@ -48,11 +48,8 @@ const AddTask = ({ addTask }) => {
               onChange={handleChange}
             />
           </label>
-        </div>
-
-        <div className='flex justify-center mt-5 '>
           <button
-            className='btn btn-active btn-success text-white w-54 '
+            className='btn btn-active btn-success text-white  mt-9 '
             type='submit'>
             Add Task
           </button>

@@ -1,14 +1,9 @@
-import { ReactSVG } from 'react-svg';
-
-import { ReactComponent as Edit } from '../assets/edit.svg';
-import remove from '../assets/delete.svg';
-
-const ShowTask = ({ tasks, clearTask }) => {
+const ShowTask = ({ tasks, clearTask, deleteTask }) => {
   return (
     <div className='flex flex-col gap-4'>
       <div className='flex items-center  justify-between  '>
         <h3 className='text-xl font-semibold text-gray-800 '>Task List</h3>
-
+        {console.log(tasks)}
         <button
           className='btn btn-active btn-accent btn-sm text-white'
           onClick={clearTask}>
@@ -29,14 +24,18 @@ const ShowTask = ({ tasks, clearTask }) => {
           <tbody>
             {tasks.length > 0 ? (
               tasks.map((task, index) => (
-                <tr>
+                <tr className='text-base '>
                   <th>{index + 1}</th>
                   <td>{task.task}</td>
                   <td>{task.date}</td>
                   <td>Pending</td>
                   <td className=' flex gap-3'>
                     <div className='tooltip' data-tip='Edit'>
-                      <button className='btn btn-outline btn-info btn-sm '>
+                      <button
+                        className='btn btn-outline btn-info btn-sm '
+                        onClick={() =>
+                          document.getElementById('my_modal_5').showModal()
+                        }>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           fill='none'
@@ -53,7 +52,9 @@ const ShowTask = ({ tasks, clearTask }) => {
                       </button>
                     </div>
                     <div className='tooltip' data-tip='Delete'>
-                      <button className='btn btn-outline btn-error btn-sm'>
+                      <button
+                        className='btn btn-outline btn-error btn-sm'
+                        onClick={() => deleteTask(index)}>
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
                           fill='none'

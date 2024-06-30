@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 // import './App.css';
 import AddTask from './components/AddTask';
 import ShowTask from './components/ShowTask';
+import UpdateTaskForm from './components/UpdateTaskForm';
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -16,6 +17,16 @@ function App() {
     setTasks([]);
     localStorage.removeItem('TaskList');
   };
+
+  const deleteTask = (index) => {
+    setTasks((prevTasks) => prevTasks.filter((_, i) => i !== index));
+  };
+
+  // useEffect(() => {
+  //   const storedTasks = JSON.parse(localStorage.getItem('TaskList'));
+  //   if (storedTasks) setTasks(storedTasks);
+  // }, []);
+
   useEffect(() => {
     localStorage.setItem('TaskList', JSON.stringify(tasks));
   }, [tasks]);
@@ -25,10 +36,11 @@ function App() {
       <header className='text-center mb-6'>
         <h1 className='text-3xl font-bold text-gray-800'>Welcome to Taskify</h1>
       </header>
-      <div className='max-w-3xl mx-auto'>
+      <div className=' flex flex-col max-w-3xl mx-auto gap-10'>
         <AddTask addTask={addTask} />
-        <ShowTask tasks={tasks} clearTask={clearTask} />
+        <ShowTask tasks={tasks} clearTask={clearTask} deleteTask={deleteTask} />
       </div>
+      <UpdateTaskForm />
     </div>
   );
 }
